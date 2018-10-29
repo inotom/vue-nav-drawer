@@ -265,8 +265,10 @@ export default {
 
 <style lang="scss">
 html[is-nav-drawer-active] {
+  position: fixed;
+
   body {
-    overflow: hidden;
+    position: fixed;
   }
 }
 </style>
