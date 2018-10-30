@@ -1,4 +1,4 @@
-# vue-component-boilerplate
+# vue-nav-drawer
 
 A Vue.js component to toggle navigation drawer menu container.
 
