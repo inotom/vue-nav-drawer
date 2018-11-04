@@ -23,7 +23,7 @@ A Vue.js component to toggle navigation drawer menu container.
 ### npm
 
 ```
-npm install --save vue-nav-drawer
+npm install --save @inotom/vue-nav-drawer
 ```
 
 
