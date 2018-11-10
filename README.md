@@ -96,6 +96,7 @@ export default {
 | `cover-opacity`        | `Number`  | `0.5`                  | Drawer background layer opacity                  |
 | `disable-close-button` | `Boolean` | `false`                | Hide close button                                |
 | `media-query`          | `String`  | `"(max-width: 640px)"` | Enable drawer conditional                        |
+| `top`                  | `String`  | `"0px"`                | Drawer top position                              |
 | `z-index`              | `Number`  | `1000`                 | Drawer z-index                                   |
 | `is-button`            | `Boolean` | `false`                | Add WAI-ARIA role button attribute to close icon |
 

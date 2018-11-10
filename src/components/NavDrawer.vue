@@ -68,6 +68,10 @@ export default {
       type: String,
       default: '(max-width: 640px)'
     },
+    top: {
+      type: String,
+      default: '0px'
+    },
     zIndex: {
       type: Number,
       default: 1000
@@ -91,6 +95,8 @@ export default {
         'nav-drawer__close--right': !this.isLeft
       },
       menuStyle: {
+        top: this.top,
+        height: `calc(100% - ${this.top})`,
         zIndex: this.zIndex + 1,
         backgroundColor: this.bgColor
       },
@@ -157,8 +163,6 @@ export default {
   %menu {
     overflow-y: auto;
     position: fixed;
-    top: 0;
-    height: 100%;
     width: $menu-width;
     transition: transform .3s ease-out 0s;
   }
