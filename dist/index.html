@@ -34,6 +34,29 @@ body {
   width: 960px;
   margin: 0 auto;
 }
+
+.nav-drawer-custom-handle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid red;
+}
+.nav-drawer-custom-handle__menu--open {
+  display: block;
+}
+.nav-drawer-custom-handle[is-active] .nav-drawer-custom-handle__menu--open {
+  display: none;
+}
+.nav-drawer-custom-handle__menu--close {
+  display: none;
+}
+.nav-drawer-custom-handle[is-active] .nav-drawer-custom-handle__menu--close {
+  display: block;
+}
+
 @media screen and (max-width: 640px) {
   .menu {
     flex-direction: column;
@@ -107,6 +130,13 @@ body {
         :is-button="true">
         <i>MENU</i>
       </nav-drawer-handle>
+
+      <nav-drawer-custom-handle
+        :is-button="true"
+      >
+        <div class="nav-drawer-custom-handle__menu--open">OPEN</div>
+        <div class="nav-drawer-custom-handle__menu--close">CLOSE</div>
+      </nav-drawer-custom-handle>
     </div>
 
     <nav-drawer :is-button="true">

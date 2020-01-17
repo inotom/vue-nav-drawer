@@ -3,6 +3,7 @@
 // Import vue component
 import NavDrawer from '@components/NavDrawer.vue';
 import NavDrawerHandle from '@components/NavDrawerHandle.vue';
+import NavDrawerCustomHandle from '@components/NavDrawerCustomHandle.vue';
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
@@ -12,6 +13,7 @@ export function install(Vue) {
   install.installed = true;
   Vue.component('nav-drawer', NavDrawer);
   Vue.component('nav-drawer-handle', NavDrawerHandle);
+  Vue.component('nav-drawer-custom-handle', NavDrawerCustomHandle);
 }
 
 // Create module definition for Vue.use()
@@ -31,4 +33,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export { NavDrawer, NavDrawerHandle };
+export { NavDrawer, NavDrawerHandle, NavDrawerCustomHandle };
