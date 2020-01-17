@@ -23,7 +23,7 @@ A Vue.js component to toggle navigation drawer menu container.
 ### npm
 
 ```
-npm install --save @inotom/vue-nav-drawer
+npm install -D @inotom/vue-nav-drawer
 ```
 
 
@@ -34,8 +34,10 @@ npm install --save @inotom/vue-nav-drawer
 ```html
 <div id="app">
   <nav-drawer-handle></nav-drawer-handle>
+  <nav-drawer-custom-handle>MENU</nav-drawer-custom-handle>
   <nav-drawer>
     MENU LIST
+    <nav-drawer-custom-close-handle>CLOSE</nav-drawer-custom-close-handle>
   </nav-drawer>
 </div>
 
@@ -55,18 +57,27 @@ new Vue({
 ```vue
 <template>
   <nav-drawer-handle></nav-drawer-handle>
+  <nav-drawer-custom-handle>MENU</nav-drawer-custom-handle>
   <nav-drawer>
     MENU LIST
+    <nav-drawer-custom-close-handle>CLOSE</nav-drawer-custom-close-handle>
   </nav-drawer>
 </template>
 
 <script>
-import { NavDrawer, NavDrawerHandle } from '@inotom/vue-nav-drawer';
+import {
+  NavDrawer,
+  NavDrawerHandle,
+  NavDrawerCustomHandle,
+  NavDrawerCustomCloseHandle
+} from '@inotom/vue-nav-drawer';
 
 export default {
   components: {
     NavDrawer,
     NavDrawerHandle
+    NavDrawerCustomHandle,
+    NavDrawerCustomCloseHandle,
   }
 }
 </script>
@@ -99,6 +110,21 @@ export default {
 | `top`                  | `String`  | `"0px"`                | Drawer top position                              |
 | `z-index`              | `Number`  | `1000`                 | Drawer z-index                                   |
 | `is-button`            | `Boolean` | `false`                | Add WAI-ARIA role button attribute to close icon |
+| `drawer-width`         | `String`  | `80vw`                 | Drawer container width                           |
+
+
+### NavDrawerCustomHandle
+
+| Props          | Type      | Default         | Description                                    |
+|----------------|-----------|-----------------|------------------------------------------------|
+| `is-button`    | `Boolean` | `false`         | Add WAI-ARIA role button attribute             |
+
+
+### NavDrawerCustomCloseHandle
+
+| Props          | Type      | Default         | Description                                    |
+|----------------|-----------|-----------------|------------------------------------------------|
+| `is-button`    | `Boolean` | `false`         | Add WAI-ARIA role button attribute             |
 
 
 ## License
