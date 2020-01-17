@@ -115,6 +115,7 @@ export default {
         backgroundColor: this.bgColor,
       },
       coverStyle: {
+        top: this.top,
         zIndex: this.zIndex,
         backgroundColor: `rgba(0, 0, 0, ${this.coverOpacity})`,
       },
