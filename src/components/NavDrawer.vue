@@ -2,17 +2,20 @@
   <div class="nav-drawer-container">
     <div
       v-if="isEnabled"
-      class="nav-drawer">
+      class="nav-drawer"
+    >
       <transition name="nav-drawer-cover">
         <div
           v-if="isOpen"
           :style="coverStyle"
           class="nav-drawer__cover"
-          @click="close"/>
+          @click="close"
+        />
       </transition>
       <transition
         v-if="!disableCloseButton"
-        name="nav-drawer-close">
+        name="nav-drawer-close"
+      >
         <div
           v-if="isOpen"
           :role="role"
@@ -20,21 +23,24 @@
           :style="closeButtonStyle"
           :class="closeClass"
           @keyup.13="close"
-          @click="close"/>
+          @click="close"
+        />
       </transition>
       <transition name="nav-drawer-menu">
         <div
           :is-active="isOpen"
           :style="menuStyle"
-          :class="menuClass">
-          <slot/>
+          :class="menuClass"
+        >
+          <slot />
         </div>
       </transition>
     </div>
     <div
       v-else
-      class="nav-drawer--disabled">
-      <slot/>
+      class="nav-drawer--disabled"
+    >
+      <slot />
     </div>
   </div>
 </template>

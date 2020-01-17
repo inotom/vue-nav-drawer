@@ -6,22 +6,22 @@
     :tabindex="tabindex"
     class="nav-drawer-handle"
     @keyup.13="toggle"
-    @click="toggle">
+    @click="toggle"
+  >
     <div class="nav-drawer-handle__inner">
       <div
-        class="nav-drawer-handle__lines">
-        <div
-          :class="lineClass"/>
-        <div
-          :class="lineClass"/>
-        <div
-          :class="lineClass"/>
+        class="nav-drawer-handle__lines"
+      >
+        <div :class="lineClass" />
+        <div :class="lineClass" />
+        <div :class="lineClass" />
       </div>
       <div
         v-if="hasLabel"
         :style="labelStyle"
-        class="nav-drawer-handle__label">
-        <slot/>
+        class="nav-drawer-handle__label"
+      >
+        <slot />
       </div>
     </div>
   </div>
