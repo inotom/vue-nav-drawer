@@ -42,7 +42,6 @@ body {
   }
   .header--mobile {
     display: block;
-    z-index: 9000;
     height: 80px;
   }
 
@@ -71,7 +70,10 @@ body {
 
   <header class="header--pc">
     <nav-drawer
-      top="80px">
+      top="80px"
+      drawer-width="100vw"
+      :disable-close-button="true"
+    >
       <nav class="menu">
         <div class="menu__item">
           <a class="menu__link" href="#">MENU 1</a>

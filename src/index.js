@@ -3,6 +3,8 @@
 // Import vue component
 import NavDrawer from '@components/NavDrawer.vue';
 import NavDrawerHandle from '@components/NavDrawerHandle.vue';
+import NavDrawerCustomHandle from '@components/NavDrawerCustomHandle.vue';
+import NavDrawerCustomCloseHandle from '@components/NavDrawerCustomCloseHandle.vue';
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
@@ -12,11 +14,13 @@ export function install(Vue) {
   install.installed = true;
   Vue.component('nav-drawer', NavDrawer);
   Vue.component('nav-drawer-handle', NavDrawerHandle);
+  Vue.component('nav-drawer-custom-handle', NavDrawerCustomHandle);
+  Vue.component('nav-drawer-custom-close-handle', NavDrawerCustomCloseHandle);
 }
 
 // Create module definition for Vue.use()
 const plugin = {
-  install
+  install,
 };
 
 // Auto-install when vue is found (eg. in browser via <script> tag)
@@ -31,4 +35,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export { NavDrawer, NavDrawerHandle };
+export { NavDrawer, NavDrawerHandle, NavDrawerCustomHandle, NavDrawerCustomCloseHandle };

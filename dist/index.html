@@ -34,6 +34,40 @@ body {
   width: 960px;
   margin: 0 auto;
 }
+
+.nav-drawer-custom-handle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #000;
+}
+.nav-drawer-custom-handle__menu--open {
+  display: block;
+}
+.nav-drawer-custom-handle[is-active] .nav-drawer-custom-handle__menu--open {
+  display: none;
+}
+.nav-drawer-custom-handle__menu--close {
+  display: none;
+}
+.nav-drawer-custom-handle[is-active] .nav-drawer-custom-handle__menu--close {
+  display: block;
+}
+
+.menu-footer {
+  display: flex;
+  justify-content: center;
+  margin: 1em auto;
+}
+
+.nav-drawer-custom-close-handle {
+  padding: .5em 1em;
+  border: 1px solid #000;
+}
+
 @media screen and (max-width: 640px) {
   .menu {
     flex-direction: column;
@@ -107,6 +141,11 @@ body {
         :is-button="true">
         <i>MENU</i>
       </nav-drawer-handle>
+
+      <nav-drawer-custom-handle :is-button="true">
+        <div class="nav-drawer-custom-handle__menu--open">OPEN</div>
+        <div class="nav-drawer-custom-handle__menu--close">CLOSE</div>
+      </nav-drawer-custom-handle>
     </div>
 
     <nav-drawer :is-button="true">
@@ -121,6 +160,11 @@ body {
           <a class="menu__link" href="#">MENU 3</a>
         </div>
       </nav>
+      <div class="menu-footer">
+        <nav-drawer-custom-close-handle :is-button="true">
+          Close
+        </nav-drawer-custom-close-handle>
+      </div>
     </nav-drawer>
   </header>
 

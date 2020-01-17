@@ -23,5 +23,5 @@ export const store = {
       window.scrollTo(0, this.top);
       document.body.style.top = 0;
     }
-  }
+  },
 };

@@ -2,17 +2,21 @@
   <div class="nav-drawer-container">
     <div
       v-if="isEnabled"
-      class="nav-drawer">
+      class="nav-drawer"
+      :style="drawerStyle"
+    >
       <transition name="nav-drawer-cover">
         <div
           v-if="isOpen"
           :style="coverStyle"
           class="nav-drawer__cover"
-          @click="close"/>
+          @click="close"
+        />
       </transition>
       <transition
         v-if="!disableCloseButton"
-        name="nav-drawer-close">
+        name="nav-drawer-close"
+      >
         <div
           v-if="isOpen"
           :role="role"
@@ -20,21 +24,24 @@
           :style="closeButtonStyle"
           :class="closeClass"
           @keyup.13="close"
-          @click="close"/>
+          @click="close"
+        />
       </transition>
       <transition name="nav-drawer-menu">
         <div
           :is-active="isOpen"
           :style="menuStyle"
-          :class="menuClass">
-          <slot/>
+          :class="menuClass"
+        >
+          <slot />
         </div>
       </transition>
     </div>
     <div
       v-else
-      class="nav-drawer--disabled">
-      <slot/>
+      class="nav-drawer--disabled"
+    >
+      <slot />
     </div>
   </div>
 </template>
@@ -50,36 +57,40 @@ export default {
   props: {
     isLeft: {
       type: Boolean,
-      default: false
+      default: false,
     },
     bgColor: {
       type: String,
-      default: '#fff'
+      default: '#fff',
     },
     coverOpacity: {
       type: Number,
-      default: 0.5
+      default: 0.5,
     },
     disableCloseButton: {
       type: Boolean,
-      default: false
+      default: false,
     },
     mediaQuery: {
       type: String,
-      default: '(max-width: 640px)'
+      default: '(max-width: 640px)',
     },
     top: {
       type: String,
-      default: '0px'
+      default: '0px',
     },
     zIndex: {
       type: Number,
-      default: 1000
+      default: 1000,
+    },
+    drawerWidth: {
+      type: String,
+      default: '80vw',
     },
     isButton: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
@@ -88,25 +99,29 @@ export default {
       isEnabled: false,
       menuClass: {
         'nav-drawer__menu--left': this.isLeft,
-        'nav-drawer__menu--right': !this.isLeft
+        'nav-drawer__menu--right': !this.isLeft,
       },
       closeClass: {
         'nav-drawer__close--left': this.isLeft,
-        'nav-drawer__close--right': !this.isLeft
+        'nav-drawer__close--right': !this.isLeft,
+      },
+      drawerStyle: {
+        '--vue-nav-drawer-width': this.drawerWidth,
       },
       menuStyle: {
         top: this.top,
         height: `calc(100% - ${this.top})`,
         zIndex: this.zIndex + 1,
-        backgroundColor: this.bgColor
+        backgroundColor: this.bgColor,
       },
       coverStyle: {
+        top: this.top,
         zIndex: this.zIndex,
-        backgroundColor: `rgba(0, 0, 0, ${this.coverOpacity})`
+        backgroundColor: `rgba(0, 0, 0, ${this.coverOpacity})`,
       },
       closeButtonStyle: {
-        zIndex: this.zIndex + 1
-      }
+        zIndex: this.zIndex + 1,
+      },
     };
   },
 
@@ -125,7 +140,7 @@ export default {
         return 0;
       }
       return false;
-    }
+    },
   },
 
   created() {
@@ -143,13 +158,15 @@ export default {
     },
     checkQueryMatch() {
       this.isEnabled = queryMatch(this.mediaQuery);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .nav-drawer {
+  --vue-nav-drawer-width: 80vw;
+
   &__cover {
     position: fixed;
     top: 0;
@@ -158,12 +175,10 @@ export default {
     height: 100vh;
   }
 
-  $menu-width: 80vw;
-
   %menu {
     overflow-y: auto;
     position: fixed;
-    width: $menu-width;
+    width: var(--vue-nav-drawer-width);
     transition: transform .3s ease-out 0s;
   }
 
@@ -183,7 +198,7 @@ export default {
       @extend %menu;
       right: 0;
       left: auto;
-      transform: translateX($menu-width);
+      transform: translateX(var(--vue-nav-drawer-width));
 
       &[is-active] {
         transform: translateX(0);
