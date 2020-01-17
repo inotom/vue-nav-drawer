@@ -158,7 +158,7 @@ export default {
     },
     checkQueryMatch() {
       this.isEnabled = queryMatch(this.mediaQuery);
-    }
+    },
   },
 };
 </script>
