@@ -1,3 +1,101 @@
+<script setup lang="ts">
+import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { useNavStore } from '../store';
+import { role, tabindex } from '../functions';
+
+interface Props {
+  drawerKey?: string;
+  isLeft?: boolean;
+  bgColor?: string;
+  coverOpacity?: number;
+  disableCloseButton?: boolean;
+  mediaQuery?: string;
+  top?: string;
+  zIndex?: number;
+  drawerWidth?: string;
+  isButton?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  drawerKey: 'default',
+  isLeft: false,
+  bgColor: '#fff',
+  coverOpacity: 0.5,
+  disableCloseButton: false,
+  mediaQuery: '(max-width: 640px)',
+  top: '0px',
+  zIndex: 1000,
+  drawerWidth: '80vw',
+  isButton: false,
+});
+
+const { closeActive, getStore, isDrawerActive } = useNavStore();
+
+const isOpen = computed(() => getStore(props.drawerKey).isActive.value);
+
+const isEnabled = ref(false);
+
+const menuClass = computed(() => {
+  return {
+    'nav-drawer__menu--left': props.isLeft,
+    'nav-drawer__menu--right': !props.isLeft,
+  };
+});
+
+const closeClass = computed(() => {
+  return {
+    'nav-drawer__close--left': props.isLeft,
+    'nav-drawer__close--right': !props.isLeft,
+  };
+});
+
+const drawerStyle = computed(() => {
+  return {
+    '--vue-nav-drawer-width': props.drawerWidth,
+  };
+});
+
+const menuStyle = computed(() => {
+  return {
+    top: props.top,
+    height: `calc(100% - ${props.top})`,
+    zIndex: props.zIndex + 1,
+    backgroundColor: props.bgColor,
+  };
+});
+
+const coverStyle = computed(() => {
+  return {
+    top: props.top,
+    zIndex: props.zIndex,
+    backgroundColor: `rgba(0, 0, 0, ${props.coverOpacity})`,
+  };
+});
+
+const closeButtonStyle = computed(() => {
+  return {
+    zIndex: props.zIndex + 1,
+  };
+});
+
+const queryMatch = (mediaQuery: string) => {
+  return window.matchMedia(mediaQuery).matches;
+};
+
+const checkQueryMatch = () => {
+  isEnabled.value = queryMatch(props.mediaQuery);
+};
+
+onBeforeMount(() => {
+  checkQueryMatch();
+  window.addEventListener('resize', checkQueryMatch);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkQueryMatch);
+});
+</script>
+
 <template>
   <div class="nav-drawer-container">
     <div
@@ -10,7 +108,7 @@
           v-if="isOpen"
           :style="coverStyle"
           class="nav-drawer__cover"
-          @click="close"
+          @click="closeActive(drawerKey)"
         />
       </transition>
       <transition
@@ -19,17 +117,17 @@
       >
         <div
           v-if="isOpen"
-          :role="role"
-          :tabindex="tabindex"
+          :role="role(isButton)"
+          :tabindex="tabindex(isButton)"
           :style="closeButtonStyle"
           :class="closeClass"
-          @keyup.13="close"
-          @click="close"
+          @keyup.13="closeActive(drawerKey)"
+          @click="closeActive(drawerKey)"
         />
       </transition>
       <transition name="nav-drawer-menu">
         <div
-          :is-active="isOpen"
+          :is-active="isDrawerActive(drawerKey)"
           :style="menuStyle"
           :class="menuClass"
         >
@@ -45,123 +143,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { store } from '@models/store.js';
-
-const queryMatch = mediaQuery => {
-  return window.matchMedia(mediaQuery).matches;
-};
-
-export default {
-  props: {
-    isLeft: {
-      type: Boolean,
-      default: false,
-    },
-    bgColor: {
-      type: String,
-      default: '#fff',
-    },
-    coverOpacity: {
-      type: Number,
-      default: 0.5,
-    },
-    disableCloseButton: {
-      type: Boolean,
-      default: false,
-    },
-    mediaQuery: {
-      type: String,
-      default: '(max-width: 640px)',
-    },
-    top: {
-      type: String,
-      default: '0px',
-    },
-    zIndex: {
-      type: Number,
-      default: 1000,
-    },
-    drawerWidth: {
-      type: String,
-      default: '80vw',
-    },
-    isButton: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      store: store,
-      isEnabled: false,
-      menuClass: {
-        'nav-drawer__menu--left': this.isLeft,
-        'nav-drawer__menu--right': !this.isLeft,
-      },
-      closeClass: {
-        'nav-drawer__close--left': this.isLeft,
-        'nav-drawer__close--right': !this.isLeft,
-      },
-      drawerStyle: {
-        '--vue-nav-drawer-width': this.drawerWidth,
-      },
-      menuStyle: {
-        top: this.top,
-        height: `calc(100% - ${this.top})`,
-        zIndex: this.zIndex + 1,
-        backgroundColor: this.bgColor,
-      },
-      coverStyle: {
-        top: this.top,
-        zIndex: this.zIndex,
-        backgroundColor: `rgba(0, 0, 0, ${this.coverOpacity})`,
-      },
-      closeButtonStyle: {
-        zIndex: this.zIndex + 1,
-      },
-    };
-  },
-
-  computed: {
-    isOpen() {
-      return this.store.isActive;
-    },
-    role() {
-      if (this.isButton) {
-        return 'button';
-      }
-      return false;
-    },
-    tabindex() {
-      if (this.isButton) {
-        return 0;
-      }
-      return false;
-    },
-  },
-
-  created() {
-    this.checkQueryMatch();
-    window.addEventListener('resize', this.checkQueryMatch);
-  },
-
-  beforeDestory() {
-    window.removeEventListener('resize', this.checkQueryMatch);
-  },
-
-  methods: {
-    close() {
-      this.store.close();
-    },
-    checkQueryMatch() {
-      this.isEnabled = queryMatch(this.mediaQuery);
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .nav-drawer {
@@ -189,7 +170,7 @@ export default {
       left: 0;
       transform: translateX(-100vw);
 
-      &[is-active] {
+      &[is-active='true'] {
         transform: translateX(0);
       }
     }
@@ -200,7 +181,7 @@ export default {
       left: auto;
       transform: translateX(var(--vue-nav-drawer-width));
 
-      &[is-active] {
+      &[is-active='true'] {
         transform: translateX(0);
       }
     }

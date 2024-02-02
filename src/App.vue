@@ -1,80 +1,38 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>vue-nav-drawer Example 2</title>
-<style>
-html {
-  font-size: 62.5%;
-}
-body {
-  font-size: 1.4rem;
-  margin: 0;
-}
-.header--mobile,
-.header {
-  box-sizing: border-box;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding: 1em;
-  background-color: #fff;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
-}
-.header--mobile {
-  display: none;
-}
-.menu {
-  display: flex;
-}
-.menu__item:not(:first-of-type) {
-  margin-left: 1em;
-}
-.content {
-  width: 960px;
-  margin: 0 auto;
-}
-@media screen and (max-width: 640px) {
-  .header--pc {
-    padding: 0;
-    box-shadow: 0 0 0 transparent;
-  }
-  .header--mobile {
-    display: block;
-    height: 80px;
-  }
+<script setup lang="ts">
+import NavDrawer from './components/NavDrawer.vue';
+import NavDrawerHandle from './components/NavDrawerHandle.vue';
+import NavDrawerCustomHandle from './components/NavDrawerCustomHandle.vue';
+import NavDrawerCustomCloseHandle from './components/NavDrawerCustomCloseHandle.vue';
+</script>
 
-  .menu {
-    flex-direction: column;
-  }
-  .menu__item:not(:first-of-type) {
-    margin-left: 0;
-    border-top: 1px solid #ccc;
-  }
-  .menu__link {
-    display: block;
-    padding: 1em;
-  }
-  .content {
-    width: 96%;
-  }
-}
-</style>
-</head>
-<body>
-<div id="app">
-  <header class="header--mobile">
-    <nav-drawer-handle></nav-drawer-handle>
-  </header>
+<template>
+  <header class="header">
+    <div class="header__nav">
+      <nav-drawer-handle></nav-drawer-handle>
 
-  <header class="header--pc">
-    <nav-drawer
-      top="80px"
-      drawer-width="100vw"
-      :disable-close-button="true"
-    >
+      <nav-drawer-handle
+        drawer-key="demo2"
+        :size="100"
+        weight="bold"
+        color="#ff0"
+        bg-color="#f00"
+        fsize="20px"
+        :is-button="true"
+      >
+        MENU
+      </nav-drawer-handle>
+
+      <nav-drawer-custom-handle drawer-key="demo3">
+        <div class="nav-drawer-custom-handle__menu--open">OPEN</div>
+        <div class="nav-drawer-custom-handle__menu--close">CLOSE</div>
+      </nav-drawer-custom-handle>
+    </div>
+
+    <nav-drawer class="mod--demo1">
       <nav class="menu">
+        <h2>
+          demo1 drawer
+        </h2>
         <div class="menu__item">
           <a class="menu__link" href="#">MENU 1</a>
         </div>
@@ -84,63 +42,67 @@ body {
         <div class="menu__item">
           <a class="menu__link" href="#">MENU 3</a>
         </div>
+      </nav>
+      <div class="menu-footer">
+        <nav-drawer-custom-close-handle :is-button="true">
+          Close
+        </nav-drawer-custom-close-handle>
+      </div>
+    </nav-drawer>
+
+    <nav-drawer
+      drawer-key="demo2"
+      :is-left="true"
+      bg-color="#fcc"
+      :cover-opacity="0.8"
+      :disable-close-button="true"
+      media-query="(min-width: 1px)"
+      top="150px"
+      :z-index="9000"
+      :is-button="true"
+      drawer-width="100vw"
+    >
+      <nav class="menu">
+        <h2>
+          demo2 drawer
+        </h2>
         <div class="menu__item">
-          <a class="menu__link" href="#">MENU 4</a>
+          <a class="menu__link" href="#">MENU 1</a>
         </div>
         <div class="menu__item">
-          <a class="menu__link" href="#">MENU 5</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 6</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 7</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 8</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 9</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 10</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 11</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 12</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 13</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 14</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 15</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 16</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 17</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 18</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 19</a>
-        </div>
-        <div class="menu__item">
-          <a class="menu__link" href="#">MENU 20</a>
+          <a class="menu__link" href="#">MENU 2</a>
         </div>
       </nav>
+      <div class="menu-footer">
+        <nav-drawer-custom-close-handle drawer-key="demo2">
+          Close
+        </nav-drawer-custom-close-handle>
+      </div>
+    </nav-drawer>
+
+    <nav-drawer
+      drawer-key="demo3"
+      media-query="(min-width: 1px)"
+      top="150px"
+    >
+      <nav class="menu">
+        <h2>
+          demo3 drawer
+        </h2>
+        <div class="menu__item">
+          <a class="menu__link" href="#">MENU 1</a>
+        </div>
+      </nav>
+      <div class="menu-footer">
+        <nav-drawer-custom-close-handle drawer-key="demo3">
+          Close
+        </nav-drawer-custom-close-handle>
+      </div>
     </nav-drawer>
   </header>
 
   <div class="content">
-    <h1>vue-nav-drawer Example 2</h1>
+    <h1>@inotom/vue-nav-drawer demo</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
@@ -203,14 +165,67 @@ body {
     </p>
   </div>
 
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-<script src="vue-nav-drawer.min.js"></script>
-<script>
-Vue.use(NavDrawer);
-new Vue({
-  el: '#app'
-});
-</script>
-</body>
-</html>
+</template>
+
+<style lang="scss" scoped>
+body {
+  margin: 0;
+}
+.header {
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  height: 150px;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
+}
+.header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.nav-drawer-custom-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #000;
+}
+.nav-drawer-custom-handle__menu--open {
+  display: block;
+}
+.nav-drawer-custom-handle[is-active='true'] .nav-drawer-custom-handle__menu--open {
+  display: none;
+}
+.nav-drawer-custom-handle__menu--close {
+  display: none;
+}
+.nav-drawer-custom-handle[is-active='true'] .nav-drawer-custom-handle__menu--close {
+  display: block;
+}
+.nav-drawer-custom-close-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  margin: 1em auto;
+  border: 1px solid #000;
+}
+@media screen and (min-width: 641px) {
+  .nav-drawer-container.mod--demo1 {
+    display: none;
+  }
+}
+</style>
+
+<style lang="scss">
+html[is-nav-drawer-demo3-active] {
+  position: fixed;
+
+  body {
+    position: fixed;
+  }
+}
+</style>
