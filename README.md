@@ -1,13 +1,12 @@
-# vue-nav-drawer
+# @inotom/vue-nav-drawer
 
 A Vue.js component to toggle navigation drawer menu container.
 
+From v2.0.0, it works for Vue 3.
 
 ## Demo
 
-[Demo](http://sandbox.serendip.ws/vue-nav-drawer.html)
-
-[Demo2](http://sandbox.serendip.ws/vue-nav-drawer2.html)
+[Demo](https://sandbox.serendip.ws/vue-nav-drawer-v2.html)
 
 
 ## Install
@@ -15,15 +14,15 @@ A Vue.js component to toggle navigation drawer menu container.
 ### Browser
 
 ```html
-<script src="vue.js"></script>
-<script src="vue-nav-drawer.min.js"></script>
+<script src="vue.global.prod.js"></script>
+<script src="vue-nav-drawer.umd.js"></script>
 ```
 
 
 ### npm
 
 ```
-npm install -D @inotom/vue-nav-drawer
+npm install --save @inotom/vue-nav-drawer
 ```
 
 
@@ -41,18 +40,25 @@ npm install -D @inotom/vue-nav-drawer
   </nav-drawer>
 </div>
 
-<script src="vue.js"></script>
-<script src="vue-nav-drawer.min.js"></script>
+<script src="vue.global.prod.js"></script>
+<script src="vue-nav-drawer.umd.js"></script>
 <script>
-Vue.use(NavDrawer);
-new Vue({
-  el: '#app'
-});
+const { createApp } = Vue;
+const { NavDrawer, NavDrawerHandle, NavDrawerCustomHandle, NavDrawerCustomCloseHandle } = SwsVueNavDrawer;
+
+createApp({
+  components: {
+    NavDrawer,
+    NavDrawerHandle,
+    NavDrawerCustomHandle,
+    NavDrawerCustomCloseHandle,
+  },
+}).mount('#app');
 </script>
 ```
 
 
-### SFC
+### SFC (TypeScript)
 
 ```vue
 <template>
@@ -64,22 +70,13 @@ new Vue({
   </nav-drawer>
 </template>
 
-<script>
+<script setup lang="ts">
 import {
   NavDrawer,
   NavDrawerHandle,
   NavDrawerCustomHandle,
   NavDrawerCustomCloseHandle
 } from '@inotom/vue-nav-drawer';
-
-export default {
-  components: {
-    NavDrawer,
-    NavDrawerHandle
-    NavDrawerCustomHandle,
-    NavDrawerCustomCloseHandle,
-  }
-}
 </script>
 ```
 
@@ -90,6 +87,7 @@ export default {
 
 | Props          | Type      | Default         | Description                                    |
 |----------------|-----------|-----------------|------------------------------------------------|
+| `drawer-key`   | `String`  | `"default"`     | Key string for drawer identification           |
 | `size`         | `Number`  | `50`            | Hamburger menu size(px)                        |
 | `weight`       | `String`  | `"normal"`      | Hamburger menu line width (normal, thin, bold) |
 | `color`        | `String`  | `"#fff"`        | Hamburger menu line color                      |
@@ -102,6 +100,7 @@ export default {
 
 | Props                  | Type      | Default                | Description                                      |
 |------------------------|-----------|------------------------|--------------------------------------------------|
+| `drawer-key`           | `String`  | `"default"`            | Key string for drawer identification             |
 | `is-left`              | `Boolean` | `false`                | Drawer container align left                      |
 | `bg-color`             | `String`  | `"#fff"`               | Drawer container background color                |
 | `cover-opacity`        | `Number`  | `0.5`                  | Drawer background layer opacity                  |
@@ -117,6 +116,7 @@ export default {
 
 | Props          | Type      | Default         | Description                                    |
 |----------------|-----------|-----------------|------------------------------------------------|
+| `drawer-key`   | `String`  | `"default"`     | Key string for drawer identification           |
 | `is-button`    | `Boolean` | `false`         | Add WAI-ARIA role button attribute             |
 
 
@@ -124,6 +124,7 @@ export default {
 
 | Props          | Type      | Default         | Description                                    |
 |----------------|-----------|-----------------|------------------------------------------------|
+| `drawer-key`   | `String`  | `"default"`     | Key string for drawer identification           |
 | `is-button`    | `Boolean` | `false`         | Add WAI-ARIA role button attribute             |
 
 

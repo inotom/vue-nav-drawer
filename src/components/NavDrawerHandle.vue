@@ -1,12 +1,67 @@
+<script setup lang="ts">
+import { computed, useSlots } from 'vue';
+import { useNavStore } from '../store';
+import { role, tabindex } from '../functions';
+
+interface Props {
+  drawerKey?: string;
+  size?: number;
+  weight?: string;
+  color?: string;
+  bgColor?: string;
+  fsize?: string;
+  isButton?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  drawerKey: 'default',
+  size: 50,
+  weight: 'normal',
+  color: '#fff',
+  bgColor: '#f6ac1d',
+  fsize: '10px',
+  isButton: false,
+});
+
+const { toggleActive, isDrawerActive } = useNavStore();
+
+const slots = useSlots();
+
+const handleStyle = computed(() => {
+  return {
+    width: `${props.size}px`,
+    height: `${props.size}px`,
+    color: props.color,
+    backgroundColor: props.bgColor
+  };
+});
+
+const labelStyle = computed(() => {
+  return {
+    fontSize: props.fsize
+  };
+});
+
+const lineClass = computed(() => {
+  return {
+    'nav-drawer-handle__line--normal': props.weight === 'normal',
+    'nav-drawer-handle__line--thin': props.weight === 'thin',
+    'nav-drawer-handle__line--bold': props.weight === 'bold',
+  };
+});
+
+const hasLabel = computed(() => typeof slots.default !== 'undefined');
+</script>
+
 <template>
   <div
-    :is-active="isActive"
+    :is-active="isDrawerActive(drawerKey)"
     :style="handleStyle"
-    :role="role"
-    :tabindex="tabindex"
+    :role="role(isButton)"
+    :tabindex="tabindex(isButton)"
     class="nav-drawer-handle"
-    @keyup.13="toggle"
-    @click="toggle"
+    @keyup.13="toggleActive(drawerKey)"
+    @click="toggleActive(drawerKey)"
   >
     <div class="nav-drawer-handle__inner">
       <div
@@ -26,86 +81,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { store } from '@models/store.js';
-
-export default {
-  props: {
-    size: {
-      type: Number,
-      default: 50
-    },
-    weight: {
-      type: String,
-      default: 'normal'
-    },
-    color: {
-      type: String,
-      default: '#fff'
-    },
-    bgColor: {
-      type: String,
-      default: '#f6ac1d'
-    },
-    fsize: {
-      type: String,
-      default: '10px'
-    },
-    isButton: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  data() {
-    return {
-      store,
-      handleStyle: {
-        width: `${this.size}px`,
-        height: `${this.size}px`,
-        color: this.color,
-        backgroundColor: this.bgColor
-      },
-      labelStyle: {
-        fontSize: this.fsize
-      },
-      lineClass: {
-        'nav-drawer-handle__line--normal': this.weight === 'normal',
-        'nav-drawer-handle__line--thin': this.weight === 'thin',
-        'nav-drawer-handle__line--bold': this.weight === 'bold',
-      }
-    };
-  },
-
-  computed: {
-    isActive() {
-      return this.store.isActive;
-    },
-    hasLabel() {
-      return typeof this.$slots.default !== 'undefined';
-    },
-    role() {
-      if (this.isButton) {
-        return 'button';
-      }
-      return false;
-    },
-    tabindex() {
-      if (this.isButton) {
-        return 0;
-      }
-      return false;
-    }
-  },
-
-  methods: {
-    toggle() {
-      this.store.toggle();
-    }
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 .nav-drawer-handle {

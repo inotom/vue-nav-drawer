@@ -1,55 +1,29 @@
+<script setup lang="ts">
+import { useNavStore } from '../store';
+import { role, tabindex } from '../functions';
+
+interface Props {
+  drawerKey?: string;
+  isButton?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  drawerKey: 'default',
+  isButton: false,
+});
+
+const { closeActive, isDrawerActive } = useNavStore();
+</script>
+
 <template>
   <div
-    :is-active="isActive"
-    :role="role"
-    :tabindex="tabindex"
+    :is-active="isDrawerActive(drawerKey)"
+    :role="role(isButton)"
+    :tabindex="tabindex(isButton)"
     class="nav-drawer-custom-close-handle"
-    @keyup.13="close"
-    @click="close"
+    @keyup.13="closeActive(drawerKey)"
+    @click="closeActive(drawerKey)"
   >
     <slot />
   </div>
 </template>
-
-<script>
-import { store } from '@models/store.js';
-
-export default {
-  props: {
-    isButton: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  data() {
-    return {
-      store,
-    };
-  },
-
-  computed: {
-    isActive() {
-      return this.store.isActive;
-    },
-    role() {
-      if (this.isButton) {
-        return 'button';
-      }
-      return false;
-    },
-    tabindex() {
-      if (this.isButton) {
-        return 0;
-      }
-      return false;
-    },
-  },
-
-  methods: {
-    close() {
-      this.store.close();
-    },
-  },
-};
-</script>
